@@ -1,0 +1,60 @@
+<div [@slideIn] class="form-container">
+    <h2>Step 1</h2>
+  
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+      <label>
+        Login
+        <input type="email"
+         name="email"
+          [(ngModel)]="formData.email"
+           required 
+           email
+           #emailCtrl="ngModel"
+           [class.invalid]="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)"
+           />
+         
+           <div class="error" *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)">
+             <small *ngIf="emailCtrl.errors?.['required']">Email is required.</small>
+             <small *ngIf="emailCtrl.errors?.['email']">Invalid email format.</small>
+           </div>
+        <div class="hint">Login must be a valid email</div>
+      </label>
+  
+      <label>
+        Password
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="formData.password"
+          required
+          pattern="(?=.*\d)(?=.*[A-Z]).{6,}"
+          #passwordRef="ngModel"
+          [class.invalid]="passwordRef.invalid && passwordRef.touched"
+        />
+        <div class="hint">Password must contain min 1 digit and min 1 uppercase letter</div>
+      </label>
+      
+      <label>
+        Confirm password
+        <input
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="formData.confirmPassword"
+          required
+          #confirmRef="ngModel"
+          [class.invalid]="(confirmRef.invalid && confirmRef.touched) || passwordsDoNotMatch"
+        />
+        <div class="hint">Confirm password must be the same with password</div>
+        <div *ngIf="passwordsDoNotMatch" class="error-message">Passwords do not match!</div>
+      </label>
+  
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="formData.agreed" name="agreed" required />
+        Agree to work for food
+      </label>
+  
+      <button type="submit" [disabled]="!form.valid">Go to step 2</button>
+    </form>
+  </div>
+
+  <router-outlet></router-outlet>

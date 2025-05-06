@@ -1,0 +1,29 @@
+<div [@slideIn] class="form-container">
+    <button class="back-button" (click)="goBack()" aria-label="Back to previous step">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+<h2>Step 2</h2>
+
+    <label>
+    Country
+    <select [(ngModel)]="selectedCountry">
+        <option value="">Select country</option>
+        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+    </select>
+    <div class="hint">Country is a required field</div>
+    </label>
+
+    <label>
+    Province
+    <select [(ngModel)]="selectedProvince" [disabled]="!selectedCountry">
+        <option value="">Please select country first</option>
+        <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+    </select>
+    <div class="hint">Province is a required field</div>
+    </label>
+
+    <button (click)="onSave()">Save</button>
+</div>
