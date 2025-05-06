@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PromomashTest.Application.Interfaces;
 using PromomashTest.Infrastructure.Data;
+using PromomashTest.Infrastructure.Repositories;
 
 namespace PromomashTest.Infrastructure.DependencyInjection
 {
@@ -11,6 +13,8 @@ namespace PromomashTest.Infrastructure.DependencyInjection
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<ICountryRepository, CountryRepository>();
 
             return services;
         }

@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using PromomashTest.Infrastructure.Data;
 using PromomashTest.Infrastructure.DependencyInjection;
+using PromomashTest.Application.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
