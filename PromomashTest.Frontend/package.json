@@ -2,12 +2,8 @@
   "name": "promomash-test.frontend",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:PromomashTest.Frontend": "node dist/promomash-test.frontend/server/server.mjs"
+    "postbuild": "xcopy /E /Y /I dist\\promomashtest-frontend\\* ..\\WebAPI\\wwwroot\\"
   },
   "private": true,
   "dependencies": {

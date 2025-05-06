@@ -1,9 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
+    <StaticWebAssetsEnabled>true</StaticWebAssetsEnabled>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,4 +23,9 @@
     <ProjectReference Include="..\Domain\PromomashTest.Domain.csproj" />
   </ItemGroup>
 
+
+  <Target Name="BuildFrontend" BeforeTargets="Build">
+    <Exec Command="npm install" WorkingDirectory="..\PromomashTest.Frontend" />
+    <Exec Command="npm run build" WorkingDirectory="..\PromomashTest.Frontend" />
+  </Target>
 </Project>
