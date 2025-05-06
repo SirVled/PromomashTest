@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models
+namespace PromomashTest.Domain.Entities
 {
-    internal class Country
+    public class Country
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
-        public List<Province> Provinces { get; private set; } = new();
+
+        private readonly List<Province> _provinces = new();
+        public IReadOnlyCollection<Province> Provinces => _provinces.AsReadOnly();
 
         private Country() { }
 
@@ -24,7 +26,7 @@ namespace Domain.Models
             if (Provinces.Any(p => p.Name == provinceName))
                 throw new InvalidOperationException($"Province '{provinceName}' already exists in '{Name}'.");
 
-            Provinces.Add(new Province(provinceName, Id));
+            _provinces.Add(new Province(provinceName, Id));
         }
     }
 }
