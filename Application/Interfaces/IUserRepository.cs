@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace PromomashTest.Application.Interfaces
 {
-    public interface ICountryRepository
+    public interface IUserRepository
     {
-        Task<List<Country>> GetAllAsync();
-        Task<Country?> GetByIdAsync(int id);
-
-        Task<List<Province>> GetProvinceByCountryIdAsync(int countryId);
+        Task AddUserAsync(User user);
+        Task AddUserAsync(User user, CancellationToken cancellationToken);
+        Task<bool> EmailExistsAsync(string email);
     }
 }

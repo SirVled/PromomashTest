@@ -8,6 +8,8 @@ namespace PromomashTest.Infrastructure.Data
         public DbSet<Country> Countries => Set<Country>();
         public DbSet<Province> Provinces => Set<Province>();
 
+        public DbSet<User> Users => Set<User>();
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
 
@@ -24,6 +26,21 @@ namespace PromomashTest.Infrastructure.Data
                       .WithOne(p => p.Country)
                       .HasForeignKey(p => p.CountryId)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(u => u.Email).IsUnique();
+                entity.Property(u => u.Email).IsRequired();
+                entity.Property(u => u.PasswordHash).IsRequired();
+
+                entity.HasOne(u => u.Country)
+                      .WithMany()
+                      .HasForeignKey(u => u.CountryId);
+
+                entity.HasOne(u => u.Province)
+                      .WithMany()
+                      .HasForeignKey(u => u.ProvinceId);
             });
 
             modelBuilder.Entity<Province>(entity =>

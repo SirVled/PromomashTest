@@ -15,6 +15,7 @@ namespace PromomashTest.Infrastructure.DependencyInjection
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

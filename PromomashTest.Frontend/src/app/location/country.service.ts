@@ -20,4 +20,8 @@ export class CountryService {
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`/api/countries`);
   }
+
+  getProvinces(countryId: number) : Observable<Province[]> {
+    return this.http.get<Province[]>(`/api/Provinces/getProvinces?countryId=${countryId}`);
+  }
 }

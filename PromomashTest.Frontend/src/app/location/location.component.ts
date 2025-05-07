@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Router } from '@angular/router';
-import { Country, CountryService } from './country.service';
+import { Country, CountryService, Province } from './country.service';
 import { RegistrationDataService } from '../register/services/registration.data.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-location',
@@ -24,8 +25,11 @@ import { RegistrationDataService } from '../register/services/registration.data.
 })
 export class LocationComponent implements OnInit  {
   countries: Country[] = [];
-
-  constructor(private service: CountryService, private dataService: RegistrationDataService) {}
+  provinces: Province[] = [];
+  constructor(
+    private service: CountryService,
+    private dataService: RegistrationDataService,
+    private userService: UserService) {}
 
   ngOnInit(): void {
     this.service.getCountries().subscribe((res) => (this.countries = res));
@@ -35,23 +39,36 @@ export class LocationComponent implements OnInit  {
   selectedCountry: number = -1;
   selectedProvince: number = -1;
 
-  get provinces() {
-    return this.countries.find(x => x.id == this.selectedCountry)?.provinces || [];
-  }
+
 
   goBack(): void {
     this.router.navigate(['/register']);
   }
 
+  onCountryChange(): void {
+    this.service.getProvinces(this.selectedCountry).subscribe(res => { this.provinces = res; });;
+  }
+
   onSave() {
     if (!this.selectedCountry || !this.selectedProvince) return;
-    console.log('Saved:', this.selectedCountry, this.selectedProvince);
-    
+
     let formData = this.dataService.getData();
     formData.countryId = this.selectedCountry;
     formData.provinceId = this.selectedProvince;
 
-    console.log(formData);
-    alert('Saved Data!');
+    this.userService.registerUser({
+      email: formData.email,
+      password: formData.password,
+      countryId: formData.countryId,
+      provinceId: formData.provinceId
+    }).subscribe({
+      next: (x) => { 
+        console.log(x);
+          alert('User registered');
+          this.dataService.setData({});
+          this.goBack();
+        },
+      error: err => {console.error('Registration failed', err); alert(err.error)}
+    });
   }
 }
