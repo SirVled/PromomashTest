@@ -1,6 +1,6 @@
 import { CanActivateFn, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { RegisterService } from './register.service';
+import { RegisterService } from './services/register.service';
 
 export function canAccessStep(requiredSteps: string[]): CanActivateFn {
   return (route: ActivatedRouteSnapshot) => {

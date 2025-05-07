@@ -18,6 +18,6 @@ export class CountryService {
   constructor(private http: HttpClient) {}
 
   getCountries(): Observable<Country[]> {
-    return this.http.get<Country[]>('/api/countries');
+    return this.http.get<Country[]>(`/api/countries`);
   }
 }

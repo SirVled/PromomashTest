@@ -9,9 +9,9 @@
 
     <label>
     Country
-    <select [(ngModel)]="selectedCountry">
+    <select [(ngModel)]="selectedCountry" >
         <option value="">Select country</option>
-        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+        <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
     </select>
     <div class="hint">Country is a required field</div>
     </label>
@@ -20,7 +20,7 @@
     Province
     <select [(ngModel)]="selectedProvince" [disabled]="!selectedCountry">
         <option value="">Please select country first</option>
-        <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+        <option *ngFor="let province of provinces" [value]="province.id">{{ province.name }}</option>
     </select>
     <div class="hint">Province is a required field</div>
     </label>

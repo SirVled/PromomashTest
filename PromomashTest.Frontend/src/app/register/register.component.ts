@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { RegisterService } from './register.service';
+import { RegisterService } from './services/register.service';
+import { RegistrationDataService } from './services/registration.data.service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,7 @@ import { RegisterService } from './register.service';
     ])
     ]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   formData = {
     email: '',
     password: '',
@@ -29,25 +30,30 @@ export class RegisterComponent {
     agreed: false
   };
 
-  constructor(private router: Router, private registerService: RegisterService) {}
-  passwordsDoNotMatch = false;
+  constructor(private router: Router, private registerService: RegisterService, private dataService: RegistrationDataService) {}
   
-  private confirmed = false;
+  ngOnInit(): void {
+    this.formData = this.dataService.getData()
+  }
+
+  passwordsDoNotMatch = false;
 
   confirmRegistration() {
     this.registerService.completeStep('register');
-    this.router.navigate(['/location']);
+    this.router.navigate(['register','location']);
   }
 
-  isConfirmed(): boolean {
-    return this.confirmed;
-  }
+
   onSubmit() {
     this.passwordsDoNotMatch = this.formData.password !== this.formData.confirmPassword;
 
     if (!this.passwordsDoNotMatch) {
+      this.dataService.setData({
+        email: this.formData.email,
+        password: this.formData.password,
+      });
+  
       this.confirmRegistration();
-      this.router.navigate(['register', 'location']);
     }
   }
 }
