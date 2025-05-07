@@ -19,8 +19,15 @@ namespace PromomashTest.WebAPI.Controllers
         [HttpGet("getProvinces")]
         public async Task<ActionResult<List<ProvinceDto>>> GetProvincesByCountryId(int countryId)
         {
-            var provinces = await _mediator.Send(new GetProvincesByCountryIdQuery(countryId));
-            return Ok(provinces);
+            try
+            {
+                var provinces = await _mediator.Send(new GetProvincesByCountryIdQuery(countryId));
+                return Ok(provinces);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
