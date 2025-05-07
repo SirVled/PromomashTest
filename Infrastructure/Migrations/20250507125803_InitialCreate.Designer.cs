@@ -10,8 +10,8 @@ using PromomashTest.Infrastructure.Data;
 namespace PromomashTest.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250507094509_CreateUsers")]
-    partial class CreateUsers
+    [Migration("20250507125803_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
