@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Infrastructure/Data/SeedData.cs
+/WebAPI/promomash.db
+/WebAPI/promomash.db-shm
+/WebAPI/promomash.db-wal
